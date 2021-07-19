@@ -2,11 +2,19 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
+    _instanceof:
+        App\EventConverter:
+            tags:
+                - name: pipes.event_converter
 
     App\:
         resource: '../src/'
         exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
             - '../src/Infrastructure/Symfony/Kernel.php'
-            - '../src/Tests/' 
+
+    App\Infrastructure\Symfony\Controller\:
+        resource: '../src/Infrastructure/Symfony/Controller'
+        tags: [ 'controller.service_arguments' ]
+
+    App\EventExchange:
+        $converters: !tagged pipes.event_converter
