@@ -31,6 +31,12 @@ class ProxyController extends AbstractController
         $request = $this->requestFactory->createRequest($currentRequest->getMethod(), $uri);
         $response = $this->httpClient->sendRequest($request);
 
+        return new Response($response->getBody(), $response->getStatusCode(), [
+            'Content-Type' => $response->getHeaderLine('Content-Type')
+        ]);
+
+        // TODO: for some reason, response gets truncated this way
+        // ie. Content-Length says 43, actual length is 58
         return $this->foundationFactory->createResponse($response);
     }
 }
