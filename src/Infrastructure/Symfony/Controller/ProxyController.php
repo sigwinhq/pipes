@@ -4,6 +4,7 @@ namespace App\Infrastructure\Symfony\Controller;
 
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
+use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,11 +14,13 @@ class ProxyController extends AbstractController
 {
     private ClientInterface $httpClient;
     private RequestFactoryInterface $requestFactory;
+    private HttpFoundationFactory $foundationFactory;
 
-    public function __construct(ClientInterface $httpClient, RequestFactoryInterface $requestFactory)
+    public function __construct(ClientInterface $httpClient, RequestFactoryInterface $requestFactory, HttpFoundationFactory $foundationFactory)
     {
         $this->httpClient = $httpClient;
         $this->requestFactory = $requestFactory;
+        $this->foundationFactory = $foundationFactory;
     }
     
     /**
@@ -27,11 +30,7 @@ class ProxyController extends AbstractController
     {
         $request = $this->requestFactory->createRequest($currentRequest->getMethod(), $uri);
         $response = $this->httpClient->sendRequest($request);
-        dump($response);
-        
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ProxyController.php',
-        ]);
+
+        return $this->foundationFactory->createResponse($response);
     }
 }
