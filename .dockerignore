@@ -1,0 +1,8 @@
+.git/
+.idea/
+public/assets/
+var/
+vendor/
+.gitignore
+docker-compose.yaml
+symfony.lock
