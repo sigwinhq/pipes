@@ -18,3 +18,6 @@ services:
 
     App\EventExchange:
         $converters: !tagged pipes.event_converter
+
+    Psr\Http\Message\RequestFactoryInterface: '@psr18.http_client'
+    Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory: ~
