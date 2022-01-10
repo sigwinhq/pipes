@@ -13,28 +13,28 @@
         "doctrine/annotations": "^1.13",
         "nyholm/psr7": "^1.4",
         "psr/http-client": "^1.0",
-        "psr/http-client-implementation": "^1.0",
-        "psr/http-factory-implementation": "^1.0",
-        "runtime/swoole": "^0.2.1",
-        "symfony/console": "5.3.*",
-        "symfony/framework-bundle": "5.3.*",
-        "symfony/http-client": "5.3.*",
-        "symfony/proxy-manager-bridge": "5.3.*",
+        "symfony/console": "^6.0",
+        "symfony/framework-bundle": "^6.0",
+        "symfony/http-client": "^6.0",
         "symfony/psr-http-message-bridge": "^2.1",
-        "symfony/runtime": "5.3.*",
-        "symfony/slack-notifier": "5.3.*",
-        "symfony/yaml": "5.3.*"
+        "symfony/runtime": "^6.0",
+        "symfony/slack-notifier": "^6.0",
+        "symfony/yaml": "^6.0"
     },
     "require-dev": {
-        "symfony/flex": "^1.13",
-        "symfony/maker-bundle": "^1.34"
+        "symfony/flex": "^2.0",
+        "symfony/maker-bundle": "^1.36"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/runtime": true,
+            "symfony/flex": true
+        }
     },
     "autoload": {
         "psr-4": {
@@ -51,15 +51,15 @@
         "symfony/polyfill-iconv": "*",
         "symfony/polyfill-php72": "*",
         "symfony/polyfill-php73": "*",
-        "symfony/polyfill-php74": "*"
+        "symfony/polyfill-php74": "*",
+        "symfony/polyfill-php80": "*"
     },
     "conflict": {
         "symfony/symfony": "*"
     },
     "extra": {
         "symfony": {
-            "allow-contrib": true,
-            "require": "5.3.*"
+            "allow-contrib": true
         }
     }
 }
