@@ -1,0 +1,47 @@
+# Read the documentation at https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml/
+service: symfony
+
+provider:
+    lambdaHashingVersion: 20201221
+    name: aws
+    region: eu-west-1
+    stage: dev
+    runtime: provided.al2
+    environment:
+        APP_ENV: prod
+
+plugins:
+    - ./vendor/bref/bref
+
+functions:
+    web:
+        handler: App\Infrastructure\Symfony\Kernel
+        timeout: 1
+        layers:
+            - ${bref:layer.php-81}
+        environment:
+            BREF_LOOP_MAX: 100
+        events:
+            - httpApi: '*'
+
+package:
+    patterns:
+        # Excluded files and folders for deployment
+        - '!.idea/**'
+        - '!.infra/**'
+        - '!assets/**'
+        - '!node_modules/**'
+        - '!public/build/**'
+        - '!tests/**'
+        - '!var/**'
+        - '!.dockerignore'
+        - '!.env'
+        - '!.php-version'
+        - '!composer.lock'
+        - '!Makefile'
+        - '!symfony.lock'
+        # If you want to include files and folders that are part of excluded folders,
+        # add them at the end
+        - 'var/cache/prod/**'
+        - 'public/build/entrypoints.json'
+        - 'public/build/manifest.json'

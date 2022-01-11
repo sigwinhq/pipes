@@ -23,9 +23,7 @@ class ProxyController extends AbstractController
         $this->foundationFactory = $foundationFactory;
     }
     
-    /**
-     * @Route("/proxy/{uri}", name="proxy", requirements={"uri": ".+"})
-     */
+    #[Route("/proxy/{uri}", name: "proxy", requirements: ['uri' => '.+'])]
     public function __invoke(Request $currentRequest, string $uri): Response
     {
         $request = $this->requestFactory->createRequest($currentRequest->getMethod(), $uri);
