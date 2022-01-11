@@ -4,3 +4,7 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
+###> bref/symfony-bridge ###
+/.serverless/
+###< bref/symfony-bridge ###
