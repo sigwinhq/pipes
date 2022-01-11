@@ -10,7 +10,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "bref/symfony-bridge": "^0.2.0@beta",
-        "doctrine/annotations": "^1.13",
         "nyholm/psr7": "^1.4",
         "psr/http-client": "^1.0",
         "symfony/console": "^6.0",
