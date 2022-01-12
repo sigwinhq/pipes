@@ -1,14 +1,20 @@
 # Read the documentation at https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml/
-service: symfony
+service: pipes
 
 provider:
     lambdaHashingVersion: 20201221
     name: aws
     region: eu-west-1
-    stage: dev
+    stage: prod
     runtime: provided.al2
     environment:
-        APP_ENV: prod
+        APP_ENV: prod    
+    httpApi:
+        disableDefaultEndpoint: true        
+        useProviderTags: true    
+    tags:
+        vendor: sigwin
+        project: pipes
 
 plugins:
     - ./vendor/bref/bref
