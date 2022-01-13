@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<psalm xmlns="https://getpsalm.org/schema/config"
+       cacheDirectory="var/psalm"
+       errorLevel="1"
+       findUnusedVariablesAndParams="true">
+    <projectFiles>
+        <file name="bin/console"/>
+        <directory name="."/>
+        <ignoreFiles allowMissingFiles="true">
+            <file name=".php-cs-fixer.dist.php"/>
+            <directory name="node_modules/"/>
+            <directory name="vendor/"/>
+            <directory name="var/"/>
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <file name="src/Infrastructure/Symfony/Controller/ProxyController.php"/>
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+    </issueHandlers>
+</psalm>

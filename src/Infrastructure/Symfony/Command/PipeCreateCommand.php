@@ -23,7 +23,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class PipeCreateCommand extends Command
 {
-    protected static $defaultName = 'pipes:pipe:create';
+    private const COMMAND_NAME = 'pipes:pipe:create';
+
+    protected static $defaultName = self::COMMAND_NAME;
 
     private DynamoDbClient $client;
     private string $tableName;
@@ -33,7 +35,7 @@ final class PipeCreateCommand extends Command
         $this->client = $client;
         $this->tableName = $tableName;
 
-        parent::__construct(self::$defaultName);
+        parent::__construct(self::COMMAND_NAME);
     }
 
     protected function configure(): void
@@ -44,12 +46,15 @@ final class PipeCreateCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $result = $this->client->putItem(new PutItemInput([
+        /** @var string $name */
+        $name = $input->getArgument('name');
+
+        $this->client->putItem(new PutItemInput([
             'TableName' => $this->tableName,
             'Item' => [
-                'PK' => new AttributeValue(['S' => $input->getArgument('name')]),
-                'SK' => new AttributeValue(['S' => $input->getArgument('name')]),
-                'name' => new AttributeValue(['S' => $input->getArgument('name')]),
+                'PK' => new AttributeValue(['S' => $name]),
+                'SK' => new AttributeValue(['S' => $name]),
+                'name' => new AttributeValue(['S' => $name]),
                 // 'name' => new AttributeValue(['S' => $input->getArgument('name')]),
             ],
         ]));
