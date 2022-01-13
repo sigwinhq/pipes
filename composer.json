@@ -9,6 +9,7 @@
         "php": "^8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-mbstring": "*",
         "async-aws/async-aws-bundle": "^1.6",
         "async-aws/dynamo-db": "^1.2",
         "bref/symfony-bridge": "^0.2.0@beta",
@@ -50,6 +51,7 @@
     "replace": {
         "symfony/polyfill-ctype": "*",
         "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-mbstring": "*",
         "symfony/polyfill-php72": "*",
         "symfony/polyfill-php73": "*",
         "symfony/polyfill-php74": "*",
