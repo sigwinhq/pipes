@@ -1,5 +1,4 @@
 ###> symfony/framework-bundle ###
-/.env
 /public/bundles/
 /var/
 /vendor/
@@ -7,4 +6,5 @@
 
 ###> bref/symfony-bridge ###
 /.serverless/
+/node_modules/
 ###< bref/symfony-bridge ###

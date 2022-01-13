@@ -1,5 +1,5 @@
-# Read the documentation at https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml/
 service: pipes
+frameworkVersion: '>=2.7'
 
 provider:
     lambdaHashingVersion: 20201221
@@ -8,17 +8,21 @@ provider:
     stage: prod
     runtime: provided.al2
     environment:
-        APP_ENV: prod    
+        APP_ENV: prod
     httpApi:
-        disableDefaultEndpoint: true        
-        useProviderTags: true    
+        disableDefaultEndpoint: true
+        useProviderTags: true
     tags:
         vendor: sigwin
         project: pipes
 
-plugins:
-    - ./vendor/bref/bref
+constructs:
+    routes:
+        type: database/dynamodb-single-table
 
+plugins:
+  - ./vendor/bref/bref
+  - serverless-lift
 functions:
     web:
         handler: App\Infrastructure\Symfony\Kernel
@@ -26,9 +30,12 @@ functions:
         layers:
             - ${bref:layer.php-81}
         environment:
+            AWS_REGION: ${provider:region}
+            AWS_DYNAMODB_TABLENAME: ${construct:routes.tableName}
             BREF_LOOP_MAX: 100
         events:
-            - httpApi: '*'
+            -
+                httpApi: '*'
 
 package:
     patterns:
