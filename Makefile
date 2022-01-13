@@ -37,7 +37,8 @@ dist: composer-normalize cs check test docs
 check: composer-normalize-check cs-check phpstan psalm
 # test: infection
 test: phpunit-coverage
-docs: markdownlint vale
+docs:
+# docs: markdownlint vale
 
 .SILENT:
 
