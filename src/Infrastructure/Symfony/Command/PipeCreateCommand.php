@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the Sigwin Pipes project.
+ *
+ * (c) sigwin.hr
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Infrastructure\Symfony\Command;
 
 use AsyncAws\DynamoDb\DynamoDbClient;
@@ -10,10 +21,10 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PipeCreateCommand extends Command
+final class PipeCreateCommand extends Command
 {
     protected static $defaultName = 'pipes:pipe:create';
-    
+
     private DynamoDbClient $client;
     private string $tableName;
 
@@ -21,7 +32,7 @@ class PipeCreateCommand extends Command
     {
         $this->client = $client;
         $this->tableName = $tableName;
-        
+
         parent::__construct(self::$defaultName);
     }
 
@@ -30,7 +41,7 @@ class PipeCreateCommand extends Command
         $this
             ->addArgument('name', InputArgument::REQUIRED, 'Name of the pipe');
     }
-    
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $result = $this->client->putItem(new PutItemInput([
@@ -38,11 +49,11 @@ class PipeCreateCommand extends Command
             'Item' => [
                 'PK' => new AttributeValue(['S' => $input->getArgument('name')]),
                 'SK' => new AttributeValue(['S' => $input->getArgument('name')]),
-                'name'=> new AttributeValue(['S' => $input->getArgument('name')]),
+                'name' => new AttributeValue(['S' => $input->getArgument('name')]),
                 // 'name' => new AttributeValue(['S' => $input->getArgument('name')]),
             ],
         ]));
-        
+
         return 0;
     }
 }

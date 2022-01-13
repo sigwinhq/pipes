@@ -1,10 +1,8 @@
 {
-    "type": "project",
     "name": "sigwin/pipes",
-    "license": "proprietary",
     "description": "Pipes to lead data from source to destination, with filtering and transformation",
-    "minimum-stability": "stable",
-    "prefer-stable": true,
+    "license": "proprietary",
+    "type": "project",
     "require": {
         "php": "^8.0",
         "ext-ctype": "*",
@@ -27,27 +25,6 @@
         "symfony/flex": "^2.0",
         "symfony/maker-bundle": "^1.36"
     },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": {
-            "*": "dist"
-        },
-        "sort-packages": true,
-        "allow-plugins": {
-            "symfony/runtime": true,
-            "symfony/flex": true
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "App\\Tests\\": "tests/"
-        }
-    },
     "replace": {
         "symfony/polyfill-ctype": "*",
         "symfony/polyfill-iconv": "*",
@@ -60,6 +37,29 @@
     },
     "conflict": {
         "symfony/symfony": "*"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "symfony/runtime": true
+        },
+        "optimize-autoloader": true,
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
     },
     "extra": {
         "symfony": {
