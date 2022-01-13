@@ -1,9 +1,11 @@
 service: pipes
 frameworkVersion: '>=2.7'
 
-# TODO: extract to .env
+# TODO: remove these two with Serverless 3.0+
+variablesResolutionMode: 20210326
+useDotenv: true
 custom:
-    region: eu-west-1
+    region: ${env:AWS_REGION}
     stage: prod
 
 provider:
@@ -26,8 +28,8 @@ constructs:
         type: database/dynamodb-single-table
 
 plugins:
-  - ./vendor/bref/bref
-  - serverless-lift
+    - ./vendor/bref/bref
+    - serverless-lift
 functions:
     web:
         handler: App\Infrastructure\Symfony\Kernel
