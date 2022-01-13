@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Symfony\Command;
 
-use AsyncAws\DynamoDb\DynamoDbClient;
-use AsyncAws\DynamoDb\Input\PutItemInput;
-use AsyncAws\DynamoDb\ValueObject\AttributeValue;
+use App\PipeManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -26,16 +24,13 @@ final class PipeCreateCommand extends Command
     private const COMMAND_NAME = 'pipes:pipe:create';
 
     protected static $defaultName = self::COMMAND_NAME;
+    private PipeManager $manager;
 
-    private DynamoDbClient $client;
-    private string $tableName;
-
-    public function __construct(DynamoDbClient $client, string $tableName)
+    public function __construct(PipeManager $manager)
     {
-        $this->client = $client;
-        $this->tableName = $tableName;
-
         parent::__construct(self::COMMAND_NAME);
+
+        $this->manager = $manager;
     }
 
     protected function configure(): void
@@ -53,15 +48,7 @@ final class PipeCreateCommand extends Command
          */
         $name = $input->getArgument('name');
 
-        $this->client->putItem(new PutItemInput([
-            'TableName' => $this->tableName,
-            'Item' => [
-                'PK' => new AttributeValue(['S' => $name]),
-                'SK' => new AttributeValue(['S' => $name]),
-                'name' => new AttributeValue(['S' => $name]),
-                // 'name' => new AttributeValue(['S' => $input->getArgument('name')]),
-            ],
-        ]));
+        $this->manager->create($name);
 
         return 0;
     }
