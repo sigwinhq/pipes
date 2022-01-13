@@ -35,7 +35,8 @@ endif
 
 dist: composer-normalize cs check test docs
 check: composer-normalize-check cs-check phpstan psalm
-test: infection
+# test: infection
+test: phpunit-coverage
 docs: markdownlint vale
 
 .SILENT:
@@ -118,4 +119,4 @@ vale: ensure
 ensure: clean
 	mkdir -p ${HOME}/.composer var/tmp/docqa var/tmp/phpqa
 clean:
-	rm -rf var/cache/*
+	rm -rf var/cache/* var/phpstan var/psalm

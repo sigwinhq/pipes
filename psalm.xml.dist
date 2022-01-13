@@ -18,7 +18,12 @@
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
                 <file name="src/Infrastructure/Symfony/Controller/ProxyController.php"/>
+                <directory name="tests/"/>
             </errorLevel>
         </PropertyNotSetInConstructor>
     </issueHandlers>
+
+    <plugins>
+        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/>
+    </plugins>
 </psalm>

@@ -46,7 +46,11 @@ final class PipeCreateCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        /** @var string $name */
+        /**
+         * @var string $name
+         *
+         * @psalm-suppress UnnecessaryVarAnnotation
+         */
         $name = $input->getArgument('name');
 
         $this->client->putItem(new PutItemInput([
