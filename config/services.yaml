@@ -2,22 +2,13 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-    _instanceof:
-        App\EventConverter:
-            tags:
-                - name: pipes.event_converter
+        bind:
+            $tableName: "%env(APP_AWS_DYNAMODB_TABLENAME)%"
 
     App\:
         resource: '../src/'
         exclude:
             - '../src/Infrastructure/Symfony/Kernel.php'
-
-    App\Infrastructure\Symfony\Controller\:
-        resource: '../src/Infrastructure/Symfony/Controller'
-        tags: [ 'controller.service_arguments' ]
-
-    App\EventExchange:
-        $converters: !tagged pipes.event_converter
 
     Psr\Http\Message\RequestFactoryInterface: '@psr18.http_client'
     Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory: ~

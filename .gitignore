@@ -1,5 +1,6 @@
+/.php-cs-fixer.cache
+
 ###> symfony/framework-bundle ###
-/.env
 /public/bundles/
 /var/
 /vendor/
@@ -7,4 +8,9 @@
 
 ###> bref/symfony-bridge ###
 /.serverless/
+/node_modules/
 ###< bref/symfony-bridge ###
+
+###> phpunit/phpunit ###
+/.phpunit.result.cache
+###< phpunit/phpunit ###
