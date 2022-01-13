@@ -35,8 +35,6 @@ functions:
         layers:
             - ${bref:layer.php-81}
         environment:
-            APP_AWS_REGION: ${self:custom.region}
-            APP_AWS_STAGE: ${self:custom.stage}
             APP_AWS_DYNAMODB_TABLENAME: ${construct:routes.tableName}
             BREF_LOOP_MAX: 100
         events:
