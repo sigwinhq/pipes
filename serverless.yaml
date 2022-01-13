@@ -1,11 +1,16 @@
 service: pipes
 frameworkVersion: '>=2.7'
 
+# TODO: extract to .env
+custom:
+    region: eu-west-1
+    stage: prod
+
 provider:
     lambdaHashingVersion: 20201221
     name: aws
-    region: eu-west-1
-    stage: prod
+    region: ${self:custom.region}
+    stage: ${self:custom.stage}
     runtime: provided.al2
     environment:
         APP_ENV: prod
@@ -30,8 +35,9 @@ functions:
         layers:
             - ${bref:layer.php-81}
         environment:
-            AWS_REGION: ${provider:region}
-            AWS_DYNAMODB_TABLENAME: ${construct:routes.tableName}
+            APP_AWS_REGION: ${self:custom.region}
+            APP_AWS_STAGE: ${self:custom.stage}
+            APP_AWS_DYNAMODB_TABLENAME: ${construct:routes.tableName}
             BREF_LOOP_MAX: 100
         events:
             -

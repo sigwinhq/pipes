@@ -3,7 +3,7 @@ services:
         autowire: true
         autoconfigure: true
         bind:
-            $tableName: "%env(AWS_DYNAMODB_TABLENAME)%"
+            $tableName: "%env(APP_AWS_DYNAMODB_TABLENAME)%"
 
     App\:
         resource: '../src/'
