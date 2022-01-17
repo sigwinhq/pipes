@@ -1,0 +1,37 @@
+version: "3.5"
+
+services:
+    database:
+        image: "amazon/dynamodb-local:1.18.0"
+        command: "-jar /home/dynamodblocal/DynamoDBLocal.jar -sharedDb -dbPath /var/lib/dynamodb/data"
+        environment:
+            - DOMAIN_NAME=default:database.pipes.local
+        volumes:
+            - "database:/var/lib/dynamodb/data"
+    php:
+        image: bref/php-81-fpm-dev:1.5.0
+        env_file:
+            - .env
+        environment:
+            - AWS_SHARED_CREDENTIALS_FILE=/var/run/aws/credentials
+            - AWS_CONFIG_FILE=/var/run/aws/config
+            - APP_DEBUG=${APP_DEBUG}
+            - APP_ENV=${APP_ENV}
+            - APP_AWS_DYNAMODB_TABLENAME=${APP_AWS_DYNAMODB_TABLENAME}
+            - AWS_REGION=${AWS_REGION}
+        volumes:
+            - .:/var/task
+            # TODO: move out of dev env
+            - $HOME/.aws:/var/run/aws:ro
+        tmpfs:
+            - /tmp
+        user: ${UID}
+    web:
+        image: bref/fpm-dev-gateway:1.5.0
+        environment:
+            - HANDLER=public/index.php
+            - DOMAIN_NAME=default:pipes.local
+        volumes:
+            - .:/var/task:ro
+volumes:
+    database: ~

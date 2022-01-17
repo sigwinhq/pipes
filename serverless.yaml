@@ -24,7 +24,7 @@ provider:
         project: pipes
 
 constructs:
-    routes:
+    pipes:
         type: database/dynamodb-single-table
 
 plugins:
@@ -37,7 +37,7 @@ functions:
         layers:
             - ${bref:layer.php-81}
         environment:
-            APP_AWS_DYNAMODB_TABLENAME: ${construct:routes.tableName}
+            APP_AWS_DYNAMODB_TABLENAME: ${construct:pipes.tableName}
             BREF_LOOP_MAX: 100
         events:
             -
