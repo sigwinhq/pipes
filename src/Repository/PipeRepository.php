@@ -16,4 +16,11 @@ namespace App\Repository;
 interface PipeRepository
 {
     public function create(string $name): void;
+
+    /**
+     * @return iterable<array{PK: string, SK: string, name: string}>
+     */
+    public function findAll(): iterable;
+
+    public function remove(string $identifier): void;
 }

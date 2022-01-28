@@ -31,6 +31,19 @@ final class PipeManager
         $this->repository->create($name);
     }
 
+    public function remove(string $identifier): void
+    {
+        $this->repository->remove($identifier);
+    }
+
+    /**
+     * @return iterable<array{PK: string, SK: string, name: string}>
+     */
+    public function findAll(): iterable
+    {
+        return $this->repository->findAll();
+    }
+
     public function createStorage(): void
     {
         $this->storage->create();
