@@ -18,6 +18,7 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 final class ProxyController extends AbstractController
@@ -31,9 +32,15 @@ final class ProxyController extends AbstractController
         $this->requestFactory = $requestFactory;
     }
 
-    #[Route('/proxy/{uri}', name: 'proxy', requirements: ['uri' => '.+'])]
-    public function __invoke(Request $currentRequest, string $uri): Response
+    #[Route('/proxy', name: 'proxy')]
+    public function __invoke(Request $currentRequest): Response
     {
+        /** @var null|string $uri */
+        $uri = $currentRequest->query->get('uri');
+        if ($uri === null) {
+            throw new BadRequestHttpException('Missing query param "uri"');
+        }
+
         $request = $this->requestFactory->createRequest($currentRequest->getMethod(), $uri);
         $response = $this->httpClient->sendRequest($request);
 
