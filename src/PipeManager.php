@@ -18,14 +18,21 @@ use App\Repository\PipeRepository;
 final class PipeManager
 {
     private PipeRepository $repository;
+    private Storage $storage;
 
-    public function __construct(PipeRepository $repository)
+    public function __construct(PipeRepository $repository, Storage $storage)
     {
         $this->repository = $repository;
+        $this->storage = $storage;
     }
 
     public function create(string $name): void
     {
         $this->repository->create($name);
+    }
+
+    public function createStorage(): void
+    {
+        $this->storage->create();
     }
 }

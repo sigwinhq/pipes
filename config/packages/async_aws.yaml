@@ -1,3 +1,19 @@
 async_aws:
+    clients:
+        dynamo_db: ~
     config:
         region: "%env(AWS_REGION)%"
+
+when@dev:
+    services:
+        AsyncAws\Core\Credentials\ConfigurationProvider: ~
+    async_aws:
+        credential_provider: AsyncAws\Core\Credentials\ConfigurationProvider
+        config:
+            accessKeyId: ""
+            accessKeySecret: ""
+            roleArn: null
+        clients:
+            dynamo_db:
+                config:
+                    endpoint: http://database:8000

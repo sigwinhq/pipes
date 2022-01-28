@@ -52,9 +52,12 @@ composer/prod:
 	symfony php /usr/bin/composer install -a --no-dev --no-scripts
 
 start/dev: composer/dev
-	APP_ENV=dev APP_DEBUG=1 symfony serve --no-tls
+	APP_ENV=dev APP_DEBUG=1 docker-compose up -d
 start/prod: composer/prod clean
-	APP_ENV=prod APP_DEBUG=0 symfony serve --no-tls
+	APP_ENV=prod APP_DEBUG=0 docker-compose up -d
+
+sh/app: ## Run application shell
+	docker-compose exec --user "$(shell id -u):$(shell id -g)" php sh
 
 deploy: composer/prod clean
 	symfony php bin/console -e prod cache:clear
