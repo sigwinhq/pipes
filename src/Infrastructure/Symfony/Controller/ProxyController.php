@@ -33,19 +33,27 @@ final class ProxyController extends AbstractController
     }
 
     #[Route('/proxy', name: 'proxy')]
-    public function __invoke(Request $currentRequest): Response
+    public function __invoke(Request $symfonyRequest): Response
     {
         /** @var null|string $uri */
-        $uri = $currentRequest->query->get('uri');
+        $uri = $symfonyRequest->query->get('uri');
         if ($uri === null) {
             throw new BadRequestHttpException('Missing query param "uri"');
         }
 
-        $request = $this->requestFactory->createRequest($currentRequest->getMethod(), $uri);
-        $response = $this->httpClient->sendRequest($request);
+        $psrRequest = $this->requestFactory->createRequest($symfonyRequest->getMethod(), $uri);
+        $psrResponse = $this->httpClient->sendRequest($psrRequest);
 
-        return new Response($response->getBody()->getContents(), $response->getStatusCode(), [
-            'Content-Type' => $response->getHeaderLine('Content-Type'),
-        ]);
+        $symfonyResponse = new Response(
+            $psrResponse->getBody()->getContents(),
+            $psrResponse->getStatusCode(), [
+                'Content-Type' => $psrResponse->getHeaderLine('Content-Type'),
+            ]
+        );
+        $symfonyResponse
+            ->setPublic()
+            ->setTtl(600);
+
+        return $symfonyResponse;
     }
 }
