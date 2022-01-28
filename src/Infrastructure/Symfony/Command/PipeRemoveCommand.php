@@ -19,9 +19,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final class PipeCreateCommand extends Command
+final class PipeRemoveCommand extends Command
 {
-    private const COMMAND_NAME = 'pipes:create';
+    private const COMMAND_NAME = 'pipes:delete';
 
     protected static $defaultName = self::COMMAND_NAME;
     private PipeManager $manager;
@@ -35,20 +35,19 @@ final class PipeCreateCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->addArgument('name', InputArgument::REQUIRED, 'Name of the pipe');
+        $this->addArgument('identifier', InputArgument::REQUIRED, 'ID of the pipe');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /**
-         * @var string $name
+         * @var string $identifier
          *
          * @psalm-suppress UnnecessaryVarAnnotation
          */
-        $name = $input->getArgument('name');
+        $identifier = $input->getArgument('identifier');
 
-        $this->manager->create($name);
+        $this->manager->remove($identifier);
 
         return 0;
     }
